@@ -1,3 +1,5 @@
+# flask application to predict the student score based on the input data
+
 from flask import Flask,request,render_template
 import numpy as np
 import pandas as pd

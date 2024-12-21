@@ -1,3 +1,5 @@
+# Description: This file is used to create a web application using Flask. It has two routes, one for the home page and the other for the prediction page. The home page is a simple HTML page with a form that takes input from the user. The prediction page takes the input from the user, processes it, and returns the prediction to the user. The prediction is done using the predict_pipeline.py file. The predict_pipeline.py file is used to load the model and make predictions on the input data. The input data is processed using the CustomData class in the predict_pipeline.py file. The CustomData class is used to convert the input data into a pandas DataFrame that can be used for prediction. The prediction is then returned to the user on the prediction page.
+
 from flask import Flask,request,render_template
 import numpy as np
 import pandas as pd
