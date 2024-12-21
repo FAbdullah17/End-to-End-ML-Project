@@ -61,7 +61,7 @@ The **Student Exam Performance Predictor** uses demographic and educational inpu
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/FAbdullah17/End-to-End-ML-Project
+   git clone https://github.com/FAbdullah17/End-to-End-ML-Project.git
    cd End-to-End-ML-Project
    ```
 
