@@ -1,5 +1,5 @@
 ## End to End ML Project
-# Student Exam Performance Predictor
+# Student Exam Performance Monitor
 
 This project is an end-to-end machine learning application that predicts students' math scores based on various demographic and educational factors. The application is built using Flask for the web interface and integrates machine learning models for the prediction task. Below is a detailed explanation of the project structure, setup, and usage.
 
