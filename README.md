@@ -14,7 +14,8 @@ This project is an end-to-end machine learning application that predicts student
 6. [Usage](#usage)
 7. [Model Training](#model-training)
 8. [Web Application](#web-application)
-9. [Future Enhancements](#future-enhancements)
+9. [Deployment](#deployment)
+10. [Future Enhancements](#future-enhancements)
 
 ---
 
@@ -136,12 +137,101 @@ The Flask app consists of the following components:
 
 ---
 
+## Deployment
+
+### Deployment Using Azure Container Registry and Docker
+
+This section outlines the steps to deploy the Flask application using Docker and Azure Container Registry (ACR).
+
+#### Prerequisites
+1. An active Azure account.
+2. Azure CLI installed on your local machine.
+3. Docker installed and running on your local machine.
+
+#### Steps for Deployment
+
+1. **Create a Dockerfile**:
+   Ensure your project has a `Dockerfile` at the root level. Below is an example:
+   ```dockerfile
+   FROM python:3.9-slim
+
+   # Set the working directory
+   WORKDIR /app
+
+   # Copy project files to the container
+   COPY . /app
+
+   # Install dependencies
+   RUN pip install --no-cache-dir -r requirements.txt
+
+   # Expose the application port
+   EXPOSE 5000
+
+   # Define the command to run the application
+   CMD ["python", "app.py"]
+   ```
+
+2. **Build the Docker Image**:
+   ```bash
+   docker build -t student-performance-app .
+   ```
+
+3. **Test the Docker Image Locally**:
+   Run the container locally to ensure it works as expected.
+   ```bash
+   docker run -p 5000:5000 student-performance-app
+   ```
+
+4. **Login to Azure**:
+   ```bash
+   az login
+   ```
+
+5. **Create an Azure Container Registry**:
+   Replace `<acr-name>` with your desired registry name.
+   ```bash
+   az acr create --resource-group <resource-group-name> --name <acr-name> --sku Basic
+   ```
+
+6. **Login to ACR**:
+   ```bash
+   az acr login --name <acr-name>
+   ```
+
+7. **Tag the Docker Image**:
+   Replace `<acr-name>` and `<image-name>` accordingly.
+   ```bash
+   docker tag student-performance-app <acr-name>.azurecr.io/student-performance-app:latest
+   ```
+
+8. **Push the Image to ACR**:
+   ```bash
+   docker push <acr-name>.azurecr.io/student-performance-app:latest
+   ```
+
+9. **Deploy the Container**:
+   Use Azure App Service or Azure Kubernetes Service (AKS) to deploy the container.
+   - **Using Azure App Service**:
+     ```bash
+     az webapp create --resource-group <resource-group-name> --plan <app-service-plan> \
+     --name <app-name> --deployment-container-image-name <acr-name>.azurecr.io/student-performance-app:latest
+     ```
+
+   - **Using Azure Kubernetes Service (AKS)**:
+     Follow AKS setup and deployment instructions from Azure documentation.
+
+10. **Access the Application**:
+    After deployment, access the application using the provided URL or IP address.
+
+---
+
 ## Future Enhancements
 1. Add more predictors (e.g., socioeconomic status, school district).
-2. Deploy the app on cloud platforms (AWS, Heroku, etc.).
+2. Deploy the app on other cloud platforms (AWS, Heroku, etc.).
 3. Improve UI design.
 4. Implement user authentication for personalized predictions.
 
 ---
 
 Feel free to contribute by creating pull requests or raising issues. Happy Coding!
+
